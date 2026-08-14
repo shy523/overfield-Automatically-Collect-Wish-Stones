@@ -1,0 +1,1271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="52">
+  <CheatEntries>
+    <CheatEntry NoScriptTag="1">
+      <ID>20723</ID>
+      <Description>"自动选择进程（CE可能会崩溃）"</Description>
+      <Options moActivateChildrenAsWell="1"/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+local processName = "launcher.exe"
+local t = createTimer(nil)
+t.Interval = 500
+
+t.OnTimer = function(timer)
+  local targetPid = getProcessIDFromProcessName(processName)
+
+  if targetPid and targetPid ~= 0 then
+
+    if targetPid == processID then
+      timer.setEnabled(false)
+      synchronize(function() timer.destroy() end)
+      return
+    end
+
+    timer.setEnabled(false)
+    synchronize(function()
+      openProcess(targetPid)
+      timer.destroy()
+    end)
+  end
+end
+{$asm}
+
+[DISABLE]
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry NoScriptTag="1">
+          <ID>20724</ID>
+          <Description>"全图浏览"</Description>
+          <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <Color>0000FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+luacall(function cycleFullCompact(sender,force); local state = not(compactmenuitem.Caption == '当前紧凑视图模式'); if force~=nil then state = not force end; compactmenuitem.Caption = state and '当前紧凑视图模式' or '当前全视图模式'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible = state; getMainForm().Panel5.Visible = state; end; function addCompactMenu(); if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = '当前紧凑视图模式'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+luacall(cycleFullCompact(nil,false))
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>20725</ID>
+              <Description>"功能区"</Description>
+              <Options moHideChildren="1"/>
+              <Color>0080FF</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry ValueOnActivate="36" RestoreOnDeactivate="1">
+                  <ID>20726</ID>
+                  <Description>"三倍跳跃高度"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>1C</Offset>
+                    <Offset>28</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>20727</ID>
+                  <Description>"连跳."</Description>
+                  <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>"GameAssembly.dll"+079DCDC0</Address>
+                  <Offsets>
+                    <Offset>A8</Offset>
+                    <Offset>1B8</Offset>
+                    <Offset>20</Offset>
+                    <Offset>10</Offset>
+                    <Offset>68</Offset>
+                    <Offset>B8</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>20728</ID>
+                      <Description>"如果无效请点击我"</Description>
+                      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>20729</ID>
+                          <Description>"连跳3"</Description>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>"GameAssembly.dll"+07B70488</Address>
+                          <Offsets>
+                            <Offset>A8</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>0</Offset>
+                            <Offset>B8</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>20730</ID>
+                          <Description>"连跳2"</Description>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>"GameAssembly.dll"+07B70828</Address>
+                          <Offsets>
+                            <Offset>A8</Offset>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>40</Offset>
+                            <Offset>0</Offset>
+                            <Offset>B8</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry NoScriptTag="1">
+                  <ID>20731</ID>
+                  <Description>"体力不减."</Description>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+GameAssembly.dll+18E6EC6:
+db 75 48
+[DISABLE]
+GameAssembly.dll+18E6EC6:
+db 74 48
+
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry NoScriptTag="1">
+                  <ID>20732</ID>
+                  <Description>"大招无cd"</Description>
+                  <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+[[[[[[["GameAssembly.dll"+07B70828]+230]+B8]+0]+20]+20]+20]+28:
+dd #200
+GameAssembly.dll+18E748E:
+db 90
+[DISABLE]
+GameAssembly.dll+18E748E:
+db EB 26
+
+
+</AssemblerScript>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>20733</ID>
+                      <Description>"大招蓝条"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>"GameAssembly.dll"+07B70828</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                        <Offset>20</Offset>
+                        <Offset>20</Offset>
+                        <Offset>20</Offset>
+                        <Offset>0</Offset>
+                        <Offset>B8</Offset>
+                        <Offset>230</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry NoCheckbox="1">
+                          <ID>20734</ID>
+                          <Description>"！！！先开大招无cd，在开大招锁定蓝条！！！"</Description>
+                          <Color>0000FF</Color>
+                          <GroupHeader>1</GroupHeader>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry NoScriptTag="1">
+                  <ID>20735</ID>
+                  <Description>"爬墙"</Description>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]+3C:
+dd (float)120
+[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]+38:
+dd (float)0
+
+[DISABLE]
+[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]+3C:
+dd (float)60
+[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]+38:
+dd (float)1
+
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="200" RestoreOnDeactivate="1">
+                  <ID>20736</ID>
+                  <Description>"视角转动速度"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>18</Offset>
+                    <Offset>28</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="99999999" RestoreOnDeactivate="1">
+                  <ID>20737</ID>
+                  <Description>"血量锁定."</Description>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>40</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="5237897" RestoreOnDeactivate="1">
+                  <ID>20738</ID>
+                  <Description>"伤害值"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>18</Offset>
+                    <Offset>10</Offset>
+                    <Offset>18</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="13.5" RestoreOnDeactivate="1">
+                  <ID>20739</ID>
+                  <Description>"三倍移速"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>EC</Offset>
+                    <Offset>058</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="99999999999999" RestoreOnDeactivate="1">
+                  <ID>20740</ID>
+                  <Description>"超级防御力"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079E21F8</Address>
+                  <Offsets>
+                    <Offset>24</Offset>
+                    <Offset>58</Offset>
+                    <Offset>60</Offset>
+                    <Offset>20</Offset>
+                    <Offset>0</Offset>
+                    <Offset>B8</Offset>
+                    <Offset>58</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>20741</ID>
+                  <Description>"坐标轴瞬移"</Description>
+                  <Options moHideChildren="1"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>20742</ID>
+                      <Description>"z轴"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Float</VariableType>
+                      <Address>"GameAssembly.dll"+079DCDC0</Address>
+                      <Offsets>
+                        <Offset>108</Offset>
+                        <Offset>20</Offset>
+                        <Offset>40</Offset>
+                        <Offset>70</Offset>
+                        <Offset>B8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>20744</ID>
+                      <Description>"y轴"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>"GameAssembly.dll"+079DCDC0</Address>
+                      <Offsets>
+                        <Offset>10C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>40</Offset>
+                        <Offset>70</Offset>
+                        <Offset>B8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>20743</ID>
+                      <Description>"x轴"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Float</VariableType>
+                      <Address>"GameAssembly.dll"+079DCDC0</Address>
+                      <Offsets>
+                        <Offset>110</Offset>
+                        <Offset>20</Offset>
+                        <Offset>40</Offset>
+                        <Offset>70</Offset>
+                        <Offset>B8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>20749</ID>
+                  <Description>"技能"</Description>
+                  <Options moHideChildren="1"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry ValueOnActivate="99999999" RestoreOnDeactivate="1">
+                      <ID>20750</ID>
+                      <Description>"E技能"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>"GameAssembly.dll"+079E21F8</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>30</Offset>
+                        <Offset>10</Offset>
+                        <Offset>50</Offset>
+                        <Offset>60</Offset>
+                        <Offset>20</Offset>
+                        <Offset>0</Offset>
+                        <Offset>B8</Offset>
+                        <Offset>58</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry ValueOnActivate="99999999" RestoreOnDeactivate="1">
+                      <ID>20751</ID>
+                      <Description>"Q技能"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>"GameAssembly.dll"+079E21F8</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>38</Offset>
+                        <Offset>10</Offset>
+                        <Offset>50</Offset>
+                        <Offset>60</Offset>
+                        <Offset>20</Offset>
+                        <Offset>0</Offset>
+                        <Offset>B8</Offset>
+                        <Offset>58</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry ValueOnActivate="99999999" RestoreOnDeactivate="1">
+                      <ID>20752</ID>
+                      <Description>"普攻（最后的爆伤）"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>"GameAssembly.dll"+079E21F8</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>28</Offset>
+                        <Offset>10</Offset>
+                        <Offset>50</Offset>
+                        <Offset>60</Offset>
+                        <Offset>20</Offset>
+                        <Offset>0</Offset>
+                        <Offset>B8</Offset>
+                        <Offset>58</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>20753</ID>
+                  <Description>"收集月亮"</Description>
+                  <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>20754</ID>
+                      <Description>"主地图"</Description>
+                      <Options moHideChildren="1"/>
+                      <Color>0000FF</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20755</ID>
+                          <Description>"收集月亮碎片&lt;樱庭世界·昼&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+    {33.40, 0.53, 19.71},
+    {-29.25, 0.07, 71.38},
+    {-64.39, 39.76, -80.50},
+    {-49.79, 39.28, -87.75},
+    {1.63, 43.38, -85.89},
+    {-22.16, 44.92, -81.77},
+    {14.41, 36.07, -68.39},
+    {58.47, 42.44, -84.32},
+    {80.68, 50.87, -51.29},
+    {66.13, 53.15, -14.37},
+    {-50.12, 62.70, 48.80},
+    {44.29, 49.82, -42.57},
+    {40.70, 53.81, -23.59},
+    {45.07, 58.07, -31.40},
+    {-47.59, 30.38, -49.86},
+    {-41.50, 38.90, -39.19},
+    {-46.03, 33.29, -32.93},
+    {-4.55, 70.16, 0.05},
+    {-0.71, 64.72, -14.49},
+    {63.30, 34.94, 42.22},
+    {70.88, 32.22, 59.45},
+    {67.49, 30.82, 67.60},
+    {-80.88, 45.46, 11.01},
+    {-80.08, 45.88, 5.56},
+    {39.61, 27.43, -21.66},
+    {27.00, 25.71, 18.44},
+    {33.89, 19.84, 31.44},
+    {33.41, 18.41, 24.97},
+    {64.32, 59.82, 44.94},
+    {64.31, 59.82, 33.83},
+    {-5.74, 24.65, -59.33},
+    {-6.70, 11.94, -64.01},
+    {-41.48, -0.23, -28.66},
+    {-47.77, 0.37, -52.06},
+    {-53.79, 4.00, -51.43},
+    {-24.39, 13.38, -62.26},
+    {-56.56, 9.75, -83.84},
+    {-63.07, 17.75, -80.83},
+    {67.86, 5.24, -77.77},
+    {76.25, -0.14, -88.22},
+    {79.00, 6.14, -16.58},
+    {79.66, 6.14, -7.97},
+    {32.99, 0.23, -7.78},
+    {26.70, 54.72, 66.33},
+    {55.24, 53.88, 72.48},
+    {-29.96, 0.22, 14.27},
+    {-25.37, 3.65, 31.52},
+    {15.44, 9.16, 40.88},
+    {79.47, -0.39, -55.38},
+    {32.39, 28.66, -42.72},
+    {-52.29, 3.41, 76.28},
+    {-0.98, 6.69, -90.09},
+    {37.07, 2.73, -78.74},
+    {52.86, 15.02, -49.32},
+    {49.91, 17.25, -50.56},
+    {39.66, 22.77, -66.09},
+    {40.79, 34.61, -65.89},
+    {61.66, 41.84, -65.24},
+    {-2.52, 46.11, 74.86},
+    {25.79, 39.26, 71.60},
+    {-33.79, 39.76, 70.70},
+    {-62.82, 30.08, 36.38},
+    {-70.15, 27.73, 51.10},
+    {1.68, 18.54, 69.15},
+    {6.96, 18.54, 78.91},
+    {-14.87, 18.77, 80.59},
+    {-19.24, 8.80, 87.79},
+    {-13.86, 8.82, 87.75},
+    {0.35, 46.29, -35.89},
+    {50.69, 2.69, -8.86},
+    {-4.18, 39.42, 43.77},
+    {36.46, 36.29, -12.97},
+    {-52.56, 37.42, -5.73},
+    {-49.02, 35.00, -15.44},
+    {-53.15, 41.94, 10.74},
+    {-62.22, 50.46, 14.04},
+    {-15.65, 58.16, 1.67},
+    {8.30, 58.79, 3.49},
+    {8.60, 57.77, 3.26},
+    {-11.70, 46.54, 58.83},
+    {-31.80, 37.32, -69.19},
+    {65.70, 32.46, -79.14},
+    {61.87, 43.49, -35.12},
+    {61.80, 43.47, -35.15},
+    {57.16, 17.86, 58.97},
+    {14.94, 8.98, 59.30},
+    {-45.43, 4.45, 68.55},
+    {27.42, 6.62, -90.22},
+    {47.94, 0.53, 18.48},
+    {38.91, 0.30, 30.49},
+    {26.74, 0.00, 61.75},
+    {-11.37, 18.54, -35.94},
+    {-15.18, 0.78, -18.98},
+    {-4.63, 0.78, -27.68},
+    {59.46, 10.31, -63.96},
+    {54.44, 35.98, 13.49},
+    {31.68, 21.81, 75.22},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20756</ID>
+                          <Description>"收集月亮碎片&lt;贝海姆世界·正&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+{-5.40, 39.83, 23.04},
+    {-5.05, 48.69, 15.62},
+    {-3.26, 46.69, 16.88},
+    {-58.74, 172.14, 97.15},
+    {45.90, 169.22, 51.97},
+    {34.57, 167.08, 35.19},
+    {62.82, 180.70, 44.39},
+    {64.00, 189.99, 51.03},
+    {60.62, 190.84, 45.21},
+    {56.17, 208.12, -2.34},
+    {111.21, 199.33, 2.02},
+    {82.62, 218.10, 62.74},
+    {64.31, 204.46, 66.63},
+    {64.13, 207.52, 64.63},
+    {13.80, 205.80, 106.50},
+    {5.53, 212.73, 105.90},
+    {49.34, 220.91, 106.00},
+    {47.34, 221.96, 97.73},
+    {50.31, 209.66, 101.95},
+    {-11.09, 206.43, 94.29},
+    {-17.81, 206.68, 108.11},
+    {-36.53, 205.11, 109.31},
+    {-37.07, 204.18, 74.29},
+    {-97.38, 206.29, 0.27},
+    {-96.51, 204.49, -39.78},
+    {-90.72, 206.43, -36.80},
+    {-106.69, 204.46, -34.18},
+    {-48.71, 224.00, -102.69},
+    {65.29, 211.82, -102.73},
+    {61.21, 218.88, -82.22},
+    {31.66, 213.73, -68.33},
+    {96.38, 204.00, -76.27},
+    {109.76, 204.00, -54.36},
+    {61.39, 220.73, -53.80},
+    {45.48, 218.37, -31.72},
+    {1.94, 233.35, -62.35},
+    {-54.21, 235.04, -68.74},
+    {-45.41, 226.28, -59.06},
+    {-109.55, 229.40, -15.52},
+    {-95.05, 233.52, 22.97},
+    {-115.42, 240.36, 12.22},
+    {-73.10, 224.02, 77.24},
+    {-39.68, 228.68, 38.27},
+    {-11.89, 234.53, 100.55},
+    {19.58, 225.31, 49.13},
+    {29.74, 227.54, 44.65},
+    {-52.90, 231.71, 59.52},
+    {38.34, 237.75, 46.25},
+    {57.81, 234.74, 58.97},
+    {68.63, 242.92, 83.20},
+    {85.95, 213.29, 0.36},
+    {87.54, 238.54, -11.12},
+    {100.17, 234.73, 4.01},
+    {104.58, 257.31, 17.44},
+    {115.52, 257.51, 35.24},
+    {104.43, 257.77, 53.27},
+    {80.49, 259.81, 51.79},
+    {73.99, 261.90, 35.31},
+    {85.62, 260.64, 14.44},
+    {46.40, 289.60, 62.21},
+    {33.34, 289.92, 57.66},
+    {4.10, 301.15, 99.77},
+    {-62.80, 283.73, 81.36},
+    {-49.90, 292.91, 71.59},
+    {2.29, 283.40, -68.52},
+    {-0.85, 283.15, -68.57},
+    {0.83, 281.27, -63.79},
+    {-64.38, 245.87, -77.74},
+    {-99.84, 221.24, -66.17},
+    {-10.38, 249.32, -71.43},
+    {-9.12, 254.90, -61.64},
+    {-10.35, 257.43, -65.52},
+    {-9.61, 251.90, -99.34},
+    {-3.74, 254.51, -117.85},
+    {3.88, 276.58, -116.65},
+    {-1.70, 276.88, -115.72},
+    {1.02, 287.39, -126.85},
+    {-2.73, 327.73, -1.60},
+    {-37.91, 408.25, -79.85},
+    {-12.39, 399.35, -120.28},
+    {-5.25, 396.31, -121.66},
+    {4.92, 396.11, -122.47},
+    {55.48, 410.43, -99.42},
+    {42.03, 200.00, -83.57},
+    {51.22, 202.28, -96.88},
+    {-99.12, 209.80, -21.59},
+    {-73.86, 214.92, 25.46},
+    {-37.12, 189.65, 71.39},
+    {92.70, 219.18, 34.88},
+    {28.15, 232.27, -71.76},
+    {-6.35, 223.91, -82.19},
+    {-109.42, 225.93, -37.40},
+    {4.62, 187.50, -80.85},
+    {-42.68, 183.05, -40.75},
+    {-43.35, 188.27, -36.53},
+    {-115.76, 184.86, 3.33},
+    {-77.35, 187.19, 33.45},
+    {-73.42, 187.19, 40.64},
+    {-67.35, 187.19, 47.52},
+    {-33.44, 181.78, 47.77},
+    {-28.15, 178.79, 49.63},
+    {89.78, 189.96, 34.22},
+    {-57.64, 180.65, -101.40},
+    {-47.69, 183.30, -110.73},
+    {-50.52, 178.37, -107.19},
+    {-9.66, 180.85, -117.07},
+    {-104.86, 167.16, 45.46},
+    {-109.07, 174.91, 30.92},
+    {-113.18, 167.81, 22.79},
+    {-75.24, 149.10, -50.86},
+    {-67.45, 150.36, -61.69},
+    {-55.22, 155.10, -53.37},
+    {43.06, 156.94, 25.11},
+    {58.51, 151.11, 25.00},
+    {55.80, 157.18, 46.82},
+    {61.57, 159.48, 56.79},
+    {1.40, 138.94, 83.75},
+    {-50.38, 125.87, -28.23},
+    {-0.34, 129.99, -50.58},
+    {45.85, 114.35, -22.12},
+    {57.29, 94.22, -49.83},
+    {31.67, 94.21, -53.76},
+    {13.77, 127.38, 50.10},
+    {-2.41, 114.06, -3.69},
+    {1.74, 119.70, -3.65},
+    {-4.47, 106.69, 13.63},
+    {34.33, 88.22, 43.46},
+    {29.50, 88.99, 50.87},
+    {28.61, 88.12, 56.69},
+    {26.81, 97.91, 76.87},
+    {10.51, 88.79, 105.36},
+    {-17.48, 94.76, 98.99},
+    {-31.37, 92.57, 90.10},
+    {-29.36, 96.11, 76.47},
+    {-33.55, 97.88, 75.55},
+    {-28.08, 102.75, 60.37},
+    {-7.70, 113.04, 48.16},
+    {-10.13, 90.29, -9.43},
+    {28.00, 82.86, -1.12},
+    {-5.30, 103.05, 82.91},
+    {3.39, 80.51, 52.28},
+    {6.61, 79.17, 55.08},
+    {4.14, 73.86, 49.98},
+    {21.26, 50.49, -12.22},
+    {15.68, 55.15, -7.51},
+    {12.98, 55.88, -13.78},
+    {3.10, 65.01, 1.33},
+    {38.77, 115.25, 47.09},
+    {2.86, 113.89, 31.79},
+    {-0.26, 112.84, 69.03},
+    {-10.75, 111.60, 72.22},
+    {-15.86, 106.79, 72.34},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20757</ID>
+                          <Description>"收集月亮碎片&lt;樱庭世界·夜&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+    {-1.40, 59.92, 2.09},
+    {-5.92, 58.16, 2.83},
+    {35.48, 40.04, 10.11},
+    {36.49, 36.10, 26.63},
+    {36.80, 39.15, -7.16},
+    {67.44, 38.41, 42.52},
+    {15.41, 38.45, 42.75},
+    {22.96, 31.96, 56.78},
+    {21.59, 31.61, 79.26},
+    {27.10, 43.51, 74.13},
+    {-34.99, 39.17, 75.31},
+    {-38.99, 34.15, 42.58},
+    {-65.55, 28.17, 33.71},
+    {-61.36, 32.46, 8.92},
+    {-62.23, 35.72, -5.38},
+    {-52.08, 32.46, -13.40},
+    {-69.44, 21.97, -54.54},
+    {-62.85, 8.79, -80.44},
+    {-60.95, 23.55, -31.33},
+    {-16.84, 17.14, -56.47},
+    {6.93, 31.55, -74.01},
+    {13.80, 36.04, -63.39},
+    {77.06, 47.25, -52.82},
+    {62.61, 41.96, -63.53},
+    {56.68, 41.84, -79.18},
+    {61.47, 32.46, -37.41},
+    {40.70, 27.43, -25.24},
+    {29.75, 21.65, 15.43},
+    {36.37, 20.20, 29.70},
+    {58.71, 13.81, 66.79},
+    {-57.89, 41.84, 4.89},
+    {-58.95, 47.04, 16.78},
+    {57.28, 16.22, -68.36},
+    {66.95, 5.18, -77.33},
+    {37.04, 27.78, -65.09},
+    {34.99, -0.45, -78.52},
+    {-55.31, 39.28, -78.08},
+    {-62.23, 39.28, -79.34},
+    {-65.43, 20.63, 53.88},
+    {-62.50, 18.74, 2.56},
+    {-28.99, 3.07, 14.79},
+    {-26.39, 3.65, 30.95},
+    {-25.02, 5.15, 56.96},
+    {-17.07, 0.98, 71.34},
+    {25.33, 2.88, 62.81},
+    {28.36, 4.46, 76.44},
+    {75.21, 5.21, 17.35},
+    {64.32, 8.10, -3.03},
+    {73.62, 13.34, -17.54},
+    {46.53, 3.14, -9.83},
+    {35.34, 0.00, -6.83},
+    {35.71, 0.00, 7.22},
+    {31.94, 4.64, 30.51},
+    {4.21, 4.32, 77.97},
+    {-48.57, 3.06, 75.02},
+    {-48.42, 4.48, 63.36},
+    {-25.41, 3.24, -3.47},
+    {-9.80, 4.41, -15.71},
+    {-46.39, 2.99, 14.56},
+    {-69.06, 13.20, 63.95},
+    {-37.19, 10.92, -69.64},
+    {-48.16, 4.00, -48.45},
+    {56.43, 53.13, 71.55},
+    {52.41, 54.67, 72.54},
+    {-59.87, 52.25, -18.12},
+    {-7.19, 53.12, -48.18},
+    {-6.77, 53.64, -61.43},
+    {3.85, 50.53, -64.48},
+    {-28.94, 39.85, 48.23},
+    {-54.60, 20.74, -23.67},
+    {-4.94, 18.56, 54.79},
+    {-19.17, 14.18, 45.28},
+    {19.77, -0.45, -79.07},
+    {-0.76, 1.76, -83.07},
+    {-78.57, 0.84, -53.48},
+    {47.66, 0.33, 7.35},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20758</ID>
+                          <Description>"收集月亮碎片&lt;蛋糕&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+    {53.00, 231.11, -69.66},
+    {57.84, 228.83, -78.70},
+    {58.12, 227.41, -78.80},
+    {41.80, 240.50, -17.67},
+    {75.57, 257.43, -1.32},
+    {75.42, 263.12, 2.18},
+    {68.01, 272.62, 11.31},
+    {33.72, 281.27, 31.33},
+    {14.91, 267.59, 27.02},
+    {18.97, 271.98, 28.66},
+    {-6.61, 239.69, 6.01},
+    {-14.73, 241.62, 12.23},
+    {-1.61, 236.08, -1.49},
+    {-66.32, 216.07, -17.42},
+    {-59.12, 204.22, -41.79},
+    {-79.02, 204.54, -7.72},
+    {-90.33, 192.91, 15.04},
+    {-90.27, 189.77, 18.23},
+    {-82.83, 188.42, 28.14},
+    {-88.33, 185.80, 33.13},
+    {-14.59, 190.00, 39.42},
+    {-18.31, 195.21, 33.42},
+    {18.91, 206.80, 52.88},
+    {77.39, 186.68, 50.04},
+    {80.37, 192.68, 37.68},
+    {64.94, 186.55, -7.00},
+    {79.70, 186.55, -5.88},
+    {64.94, 186.55, 18.65},
+    {81.45, 186.55, 21.08},
+    {62.99, 186.55, 6.31},
+    {83.08, 186.55, 6.49},
+    {-41.48, 187.36, 15.74},
+    {-37.89, 188.10, 14.49},
+    {4.44, 197.14, -62.50},
+    {78.02, 206.33, -69.94},
+    {70.19, 195.42, -45.23},
+    {64.04, 193.67, -37.82},
+    {59.22, 198.62, -36.40},
+    {7.32, 205.20, -11.05},
+    {8.33, 203.91, -18.34},
+    {-67.22, 181.68, -66.53},
+    {-70.46, 179.22, -71.06},
+    {-60.22, 130.43, -73.83},
+    {-58.75, 127.70, -68.99},
+    {21.71, 151.44, -155.12},
+    {105.87, 109.00, -78.95},
+    {95.85, 111.80, -81.91},
+    {103.18, 105.34, 1.62},
+    {103.85, 107.13, 5.05},
+    {107.38, 127.27, 53.50},
+    {108.04, 126.87, 51.53},
+    {107.12, 126.35, 55.35},
+    {91.85, 131.23, 58.20},
+    {92.52, 106.73, 35.59},
+    {64.70, 141.58, 89.53},
+    {56.44, 142.61, 90.03},
+    {-0.10, 138.76, 88.14},
+    {-78.34, 106.92, 56.41},
+    {-78.46, 98.91, 52.68},
+    {-4.98, 103.24, -3.43},
+    {4.42, 99.82, -6.10},
+    {28.52, 98.91, -30.99},
+    {31.55, 98.91, -50.43},
+    {29.05, 98.91, -57.74},
+    {28.14, 98.91, -76.53},
+    {10.55, 98.91, -77.28},
+    {11.10, 98.91, -60.44},
+    {11.70, 98.91, -47.78},
+    {12.11, 98.91, -33.94},
+    {12.02, 103.55, -160.74},
+    {60.92, 120.33, -128.54},
+    {54.29, 116.26, -132.95},
+    {-44.32, 137.03, 76.14},
+    {-40.39, 139.40, 77.67},
+    {-38.37, 142.35, 62.14},
+    {-68.56, 138.34, 50.82},
+    {-42.35, 141.41, 47.75},
+    {-68.64, 139.04, -10.10},
+    {-44.84, 142.76, -11.62},
+    {-55.26, 137.03, -12.51},
+    {-63.83, 153.88, -15.54},
+    {-3.48, 168.92, -51.52},
+    {9.09, 154.03, -48.32},
+    {12.24, 157.83, -48.05},
+    {91.19, 150.37, -52.08},
+    {91.38, 150.23, -13.56},
+    {33.55, 126.94, -54.63},
+    {82.52, 136.33, -68.32},
+    {80.74, 137.61, -76.23},
+    {63.46, 136.33, -84.48},
+    {52.85, 136.33, -86.05},
+    {49.54, 136.33, -74.61},
+    {61.42, 136.33, -73.73},
+    {-7.48, 117.62, -64.60},
+    {8.57, 117.62, -64.58},
+    {1.93, 117.62, -53.77},
+    {-5.98, 123.44, -40.01},
+    {87.27, 162.62, 23.63},
+    {80.87, 164.65, 22.22},
+    {91.83, 157.81, 38.50},
+    {92.25, 156.21, 49.25},
+    {43.17, 112.94, 139.00},
+    {-20.09, 148.02, -20.58},
+    {-27.30, 145.45, -25.52},
+    {-50.12, 156.86, -56.84},
+    {-74.69, 156.16, -45.88},
+    {56.30, 216.80, 56.83},
+    {-8.52, 211.05, -86.36},
+    {-12.60, 209.64, -78.54},
+    {-30.28, 178.20, 60.26},
+    {-40.39, 185.77, 61.82},
+    {-44.87, 185.84, 61.46},
+    {-62.75, 158.59, -41.46},
+    {-75.05, 183.82, -61.26},
+    {20.55, 151.05, -154.45},
+    {-71.23, 94.98, 108.70},
+    {-93.94, 100.60, 13.43},
+    {-94.03, 103.49, -9.98},
+    {-93.25, 103.48, -36.03},
+    {-50.19, 100.08, -62.55},
+    {-42.13, 100.45, -62.70},
+    {-36.21, 101.08, -63.44},
+    {-42.63, 106.19, -73.04},
+    {48.50, 104.87, -49.58},
+    {59.94, 108.59, -45.70},
+    {62.15, 111.18, -51.19},
+    {-57.23, 137.03, 9.33},
+    {31.25, 214.31, -52.26},
+    {20.00, 212.68, -52.28},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>20759</ID>
+                      <Description>"DLC地图"</Description>
+                      <Options moHideChildren="1"/>
+                      <Color>0000FF</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20760</ID>
+                          <Description>"收集月亮碎片&lt;鸳鸯锅&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+    {15.27, 29.41, 15.25},
+    {28.39, 30.49, 20.52},
+    {24.39, 35.19, 20.26},
+    {30.92, 44.17, 45.17},
+    {5.53, 36.79, 50.30},
+    {9.15, 30.03, 54.54},
+    {6.05, 36.74, 50.26},
+    {3.20, 33.32, 69.89},
+    {3.20, 49.76, 70.34},
+    {41.36, 39.84, 60.86},
+    {52.49, 48.03, 54.42},
+    {53.73, 46.20, 41.43},
+    {68.91, 50.42, 5.15},
+    {72.23, 51.44, 0.41},
+    {63.93, 52.89, -4.72},
+    {66.06, 45.97, -29.22},
+    {59.06, 46.25, -49.06},
+    {55.01, 46.25, -54.50},
+    {49.75, 47.21, -51.56},
+    {22.00, 45.77, -74.37},
+    {19.07, 49.89, -74.13},
+    {11.93, 46.30, -72.26},
+    {4.65, 44.35, -50.09},
+    {3.95, 41.26, -48.30},
+    {11.08, 27.23, -22.11},
+    {14.53, 27.23, -33.32},
+    {-49.46, 40.04, -64.62},
+    {-52.56, 47.18, -54.09},
+    {-52.76, 44.20, -45.84},
+    {-46.63, 38.36, -28.28},
+    {-51.54, 25.88, -36.36},
+    {-17.68, 27.99, -17.83},
+    {-10.15, 28.33, -14.19},
+    {-46.29, 31.03, 42.59},
+    {-69.40, 33.47, 16.71},
+    {-76.76, 51.17, -14.47},
+    {-47.82, 50.75, -48.91},
+    {-16.91, 34.44, 78.92},
+    {-9.92, 42.13, 85.61},
+    {-12.94, 47.94, 71.51},
+    {-12.23, 55.09, 77.11},
+    {-18.24, 57.24, 67.08},
+    {-35.44, 64.95, 66.04},
+    {-37.70, 51.81, 63.60},
+    {-49.18, 45.63, 52.53},
+    {-60.84, 44.83, 52.87},
+    {-67.16, 55.72, 50.78},
+    {-15.05, 69.20, 73.06},
+    {-41.73, 50.46, 33.96},
+    {-50.37, 51.51, 28.12},
+    {-7.65, 33.00, -27.73},
+    {-3.00, 34.19, -31.01},
+    {29.26, 33.29, -46.09},
+    {32.28, 27.57, -39.55},
+    {26.65, 27.49, -6.62},
+    {63.25, 31.60, -2.80},
+    {23.69, 27.06, 64.11},
+    {31.28, 25.85, 73.01},
+    {0.48, 52.59, 102.71},
+    {-28.29, 55.43, 117.64},
+    {-42.52, 61.59, 121.17},
+    {2.67, 71.14, 140.62},
+    {-120.00, 53.21, -20.47},
+    {-118.46, 56.60, -49.63},
+    {-114.60, 59.90, -53.72},
+    {-87.57, 57.58, -68.64},
+    {-77.94, 57.26, -67.66},
+    {-72.94, 57.44, -77.78},
+    {-80.01, 57.45, -83.71},
+    {-87.62, 57.66, -82.57},
+    {-82.42, 57.52, -76.89},
+    {-27.11, 53.48, -132.26},
+    {48.77, 50.88, -106.69},
+    {88.38, 51.06, -52.26},
+    {112.77, 63.84, -25.90},
+    {138.39, 60.30, -12.04},
+    {64.83, 52.10, 76.19},
+    {-70.70, 30.91, -8.39},
+    {-72.44, 45.17, -1.09},
+    {-70.44, 56.97, 96.67},
+    {-49.84, 58.46, 57.95},
+    {-51.55, 53.09, 56.63},
+    {-148.43, 52.01, -0.91},
+    {-132.23, 53.00, -14.11},
+    {32.75, 55.27, -121.43},
+    {31.79, 46.29, -123.42},
+    {157.86, 67.17, 21.59},
+    {155.55, 65.90, 26.24},
+    {142.82, 53.59, 34.81},
+    {118.44, 48.84, 45.17},
+    {119.26, 49.16, 49.36},
+    {109.26, 58.82, 59.19},
+    {72.05, 66.05, -2.98},
+    {70.25, 61.33, -1.53},
+    {-0.46, 25.71, 0.51},
+    {16.91, 34.65, -48.74},
+    {50.90, 35.48, -52.92},
+    {-24.96, 66.22, 56.38},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                        <CheatEntry NoScriptTag="1">
+                          <ID>20761</ID>
+                          <Description>"收集月亮碎片&lt;水晶球&gt;"</Description>
+                          <VariableType>Auto Assembler Script</VariableType>
+                          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+local coordinates = {
+    {-23.31, 21.08, -25.75},
+    {-9.27, 20.61, -27.48},
+    {8.44, 17.82, -25.62},
+    {44.73, 44.31, -8.98},
+    {38.51, 43.18, 2.59},
+    {43.80, 44.36, 20.67},
+    {33.71, 52.24, 6.38},
+    {33.67, 60.92, 7.07},
+    {33.47, 72.15, -31.12},
+    {11.21, 57.56, -46.35},
+    {-11.85, 65.81, -34.98},
+    {-22.10, 61.33, -8.70},
+    {-25.41, 56.80, -1.68},
+    {-26.10, 54.86, 5.52},
+    {-15.01, 57.26, 9.52},
+    {-11.73, 61.39, 17.20},
+    {-1.52, 54.07, 13.67},
+    {11.74, 38.60, 35.17},
+    {25.36, 46.41, 43.12},
+    {23.50, 63.40, -13.63},
+    {-45.86, 19.13, -16.16},
+    {-46.48, 17.97, -19.01},
+    {-35.52, 20.57, 10.21},
+    {-42.78, 22.33, 5.13},
+    {-41.55, 17.41, 20.27},
+    {-40.06, 16.45, 26.98},
+    {-29.91, 16.90, 28.13},
+    {-21.22, 17.27, 30.07},
+    {-14.66, 14.71, 44.31},
+    {11.26, 14.93, 43.78},
+    {21.31, 14.48, 34.82},
+    {33.34, 15.35, 1.76},
+    {32.39, 15.35, 10.47},
+    {37.92, 20.04, 10.56},
+    {34.73, 24.87, -2.71},
+    {34.02, 24.87, 15.22},
+    {39.46, 15.06, -11.46},
+    {19.77, 18.65, -41.82},
+    {19.75, 18.65, -41.83},
+    {15.75, 21.45, -42.62},
+    {-13.31, 33.58, -37.12},
+    {-21.37, 23.33, -39.57},
+    {7.53, 24.84, -0.06},
+    {2.01, 22.34, -5.49},
+    {-25.61, 35.05, -1.14},
+    {32.22, 34.89, 20.77},
+    {32.57, 31.09, 39.56},
+    {-5.40, 39.83, 23.04},
+    {-5.05, 48.69, 15.62},
+    {-3.26, 46.69, 16.88},
+}
+tpt_stop = false
+
+local function writeLoop()
+    local pointerExpr = '[[[[["GameAssembly.dll"+079DCDC0]+B8]+70]+40]+20]'
+
+    for i, coord in ipairs(coordinates) do
+        if tpt_stop then break end
+
+        local realBase = getAddress(pointerExpr)
+        if realBase and realBase ~= 0 then
+            writeFloat(realBase + 0x108, coord[1]) -- X
+            writeFloat(realBase + 0x10C, coord[2]) -- Y
+            writeFloat(realBase + 0x110, coord[3]) -- Z
+        end
+        sleep(300)
+    end
+end
+tpt_stop = false
+createThread(writeLoop)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+tpt_stop = true
+{$asm}
+</AssemblerScript>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry ValueOnActivate="0" ValueOnDeactivate="0.4">
+                  <ID>20762</ID>
+                  <Description>"空中滑翔时间"</Description>
+                  <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>"GameAssembly.dll"+079DCDC0</Address>
+                  <Offsets>
+                    <Offset>84</Offset>
+                    <Offset>1B8</Offset>
+                    <Offset>20</Offset>
+                    <Offset>10</Offset>
+                    <Offset>68</Offset>
+                    <Offset>B8</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
