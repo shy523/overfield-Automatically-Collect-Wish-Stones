@@ -1,4 +1,4 @@
-# Automatically Collect Wish Stones
+# Oerfield Automatically Collect Wish Stones
 # README
 This is my first time using Python, and the program currently functions without crashing.
 
@@ -10,7 +10,7 @@ This is my first time using Python, and the program currently functions without 
 * While it appears that the developers do not enforce any restrictions and the game currently has no anti-cheat system in place,
 * you assume all risks yourself.
 ---------------------------------------------------------------------------------------------------
-# 自动收集许愿石
+# Oerfield自动收集许愿石
 这是我第一次使用 Python 编写程序，目前程序运行正常，没有崩溃。
 
 
